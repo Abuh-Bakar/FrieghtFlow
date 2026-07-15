@@ -1,0 +1,93 @@
+{
+  "home": {
+    "nav": {
+      "signin": "Sign in",
+      "getStarted": "Get started free"
+    },
+    "hero": {
+      "headline": "Move freight with clarity, speed, and trust",
+      "subheadline": "FreightFlow connects shippers and carriers on one secure marketplace built for modern logistics.",
+      "primaryCta": "Explore the platform",
+      "secondaryCta": "See how it works"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "Enter your email and password to access your account",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "signupPrompt": "Don't have an account?",
+      "signup": "Sign up"
+    },
+    "register": {
+      "title": "Create an account",
+      "description": "Join FreightFlow to manage your logistics",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "roleLabel": "I am a…",
+      "roles": {
+        "shipper": "shipper",
+        "carrier": "carrier"
+      },
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "signinPrompt": "Already have an account?",
+      "signin": "Sign in",
+      "successTitle": "Check your email",
+      "successDescription": "We've sent a verification link to your email address. Please verify your account to unlock all features.",
+      "redirecting": "Redirecting to dashboard…"
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "description": "Enter your email address and we'll send you a reset link.",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "remembered": "Remember your password?",
+      "signin": "Sign in",
+      "successTitle": "Check your inbox",
+      "successDescription": "If an account exists for that email address, we've sent a password reset link. It expires in 1 hour.",
+      "resendPrompt": "Didn't receive it? Check your spam folder or",
+      "tryAgain": "try again",
+      "backToSignin": "← Back to sign in"
+    },
+    "resetPassword": {
+      "invalidTitle": "Invalid link",
+      "invalidDescription": "This password reset link is invalid or has already been used.",
+      "requestNewLink": "Request a new link",
+      "successTitle": "Password updated!",
+      "successDescription": "Your password has been reset. You can now sign in with your new password.",
+      "signin": "Sign in",
+      "title": "Set new password",
+      "description": "Choose a strong password for your FreightFlow account.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "submit": "Set new password",
+      "submitting": "Updating…",
+      "backToSignin": "← Back to sign in"
+    }
+  },
+  "dashboard": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "myShipments": "My Shipments",
+      "createShipment": "Create Shipment",
+      "myJobs": "My Jobs",
+      "marketplace": "Marketplace",
+      "adminPanel": "Admin Panel",
+      "manageUsers": "Manage Users",
+      "shipmentOversight": "Shipment Oversight",
+      "disputes": "Disputes",
+      "profile": "Profile",
+      "settings": "Settings",
+      "signOut": "Sign out",
+      "openMenu": "Open navigation menu"
+    }
+  }
+}

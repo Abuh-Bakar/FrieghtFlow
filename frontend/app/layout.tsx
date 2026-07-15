@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
 import { QueryProvider } from "../providers/query-provider";
 import ToastContainer from "../components/ui/ToastContainer";
@@ -20,13 +22,16 @@ export const metadata: Metadata = {
   description: "Comprehensive freight and logistics management platform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         {/* Inline script to apply theme before first paint — prevents flash */}
         <script
@@ -38,11 +43,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          {children}
-          <Toaster position="top-right" richColors />
-          <ToastContainer />
-        </QueryProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <QueryProvider>
+            {children}
+            <Toaster position="top-right" richColors />
+            <ToastContainer />
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

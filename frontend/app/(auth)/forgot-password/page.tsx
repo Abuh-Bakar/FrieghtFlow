@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
@@ -25,6 +26,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations('auth.forgotPassword');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -51,27 +53,24 @@ export default function ForgotPasswordPage() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Check your inbox</CardTitle>
-          <CardDescription>
-            If an account exists for that email address, we&apos;ve sent a password reset link.
-            It expires in 1 hour.
-          </CardDescription>
+          <CardTitle>{t('successTitle')}</CardTitle>
+          <CardDescription>{t('successDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Didn&apos;t receive it? Check your spam folder or{' '}
+            {t('resendPrompt')}{' '}
             <button
               onClick={() => setSubmitted(false)}
               className="text-primary underline underline-offset-4"
             >
-              try again
+              {t('tryAgain')}
             </button>
             .
           </p>
         </CardContent>
         <CardFooter>
           <Link href="/login" className="text-sm text-primary underline underline-offset-4">
-            ← Back to sign in
+            {t('backToSignin')}
           </Link>
         </CardFooter>
       </Card>
@@ -81,15 +80,13 @@ export default function ForgotPasswordPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Forgot password?</CardTitle>
-        <CardDescription>
-          Enter your email address and we&apos;ll send you a reset link.
-        </CardDescription>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input
               id="email"
               type="email"
@@ -104,12 +101,12 @@ export default function ForgotPasswordPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Sending…' : 'Send reset link'}
+            {loading ? t('submitting') : t('submit')}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Remember your password?{' '}
+            {t('remembered')}{' '}
             <Link href="/login" className="text-primary underline underline-offset-4">
-              Sign in
+              {t('signin')}
             </Link>
           </p>
         </CardFooter>

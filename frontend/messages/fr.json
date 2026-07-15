@@ -1,0 +1,93 @@
+{
+  "home": {
+    "nav": {
+      "signin": "Se connecter",
+      "getStarted": "Commencer gratuitement"
+    },
+    "hero": {
+      "headline": "Déplacez vos marchandises avec clarté, rapidité et confiance",
+      "subheadline": "FreightFlow relie expéditeurs et transporteurs sur un marché unique et sécurisé conçu pour la logistique moderne.",
+      "primaryCta": "Explorer la plateforme",
+      "secondaryCta": "Voir comment ça marche"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "description": "Saisissez votre adresse e-mail et votre mot de passe pour accéder à votre compte",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "submitting": "Connexion en cours…",
+      "signupPrompt": "Vous n'avez pas de compte ?",
+      "signup": "Créer un compte"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Rejoignez FreightFlow pour gérer votre logistique",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "roleLabel": "Je suis…",
+      "roles": {
+        "shipper": "expéditeur",
+        "carrier": "transporteur"
+      },
+      "submit": "Créer un compte",
+      "submitting": "Création du compte…",
+      "signinPrompt": "Vous avez déjà un compte ?",
+      "signin": "Se connecter",
+      "successTitle": "Vérifiez votre boîte mail",
+      "successDescription": "Nous avons envoyé un lien de vérification à votre adresse e-mail. Veuillez vérifier votre compte pour débloquer toutes les fonctionnalités.",
+      "redirecting": "Redirection vers le tableau de bord…"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "description": "Saisissez votre adresse e-mail et nous vous enverrons un lien de réinitialisation.",
+      "email": "E-mail",
+      "submit": "Envoyer le lien",
+      "submitting": "Envoi…",
+      "remembered": "Vous vous souvenez de votre mot de passe ?",
+      "signin": "Se connecter",
+      "successTitle": "Vérifiez votre boîte mail",
+      "successDescription": "Si un compte existe pour cette adresse e-mail, nous avons envoyé un lien de réinitialisation. Il expire dans 1 heure.",
+      "resendPrompt": "Vous ne l'avez pas reçu ? Vérifiez vos spams ou",
+      "tryAgain": "réessayez",
+      "backToSignin": "← Retour à la connexion"
+    },
+    "resetPassword": {
+      "invalidTitle": "Lien invalide",
+      "invalidDescription": "Ce lien de réinitialisation est invalide ou a déjà été utilisé.",
+      "requestNewLink": "Demander un nouveau lien",
+      "successTitle": "Mot de passe mis à jour !",
+      "successDescription": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+      "signin": "Se connecter",
+      "title": "Définir un nouveau mot de passe",
+      "description": "Choisissez un mot de passe robuste pour votre compte FreightFlow.",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Définir le mot de passe",
+      "submitting": "Mise à jour…",
+      "backToSignin": "← Retour à la connexion"
+    }
+  },
+  "dashboard": {
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "myShipments": "Mes expéditions",
+      "createShipment": "Créer une expédition",
+      "myJobs": "Mes missions",
+      "marketplace": "Marché",
+      "adminPanel": "Panneau d'administration",
+      "manageUsers": "Gérer les utilisateurs",
+      "shipmentOversight": "Suivi des expéditions",
+      "disputes": "Litiges",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "signOut": "Se déconnecter",
+      "openMenu": "Ouvrir le menu de navigation"
+    }
+  }
+}

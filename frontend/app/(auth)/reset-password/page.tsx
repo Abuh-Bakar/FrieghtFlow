@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -33,6 +34,7 @@ const schema = z
 type FormData = z.infer<typeof schema>;
 
 function ResetPasswordForm() {
+  const t = useTranslations('auth.resetPassword');
   const searchParams = useSearchParams();
   const token = searchParams.get('token') ?? '';
   const [loading, setLoading] = useState(false);
@@ -48,14 +50,12 @@ function ResetPasswordForm() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Invalid link</CardTitle>
-          <CardDescription>
-            This password reset link is invalid or has already been used.
-          </CardDescription>
+          <CardTitle>{t('invalidTitle')}</CardTitle>
+          <CardDescription>{t('invalidDescription')}</CardDescription>
         </CardHeader>
         <CardFooter>
           <Link href="/forgot-password" className="text-sm text-primary underline underline-offset-4">
-            Request a new link
+            {t('requestNewLink')}
           </Link>
         </CardFooter>
       </Card>
@@ -66,14 +66,12 @@ function ResetPasswordForm() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Password updated!</CardTitle>
-          <CardDescription>
-            Your password has been reset. You can now sign in with your new password.
-          </CardDescription>
+          <CardTitle>{t('successTitle')}</CardTitle>
+          <CardDescription>{t('successDescription')}</CardDescription>
         </CardHeader>
         <CardFooter>
           <Button asChild className="w-full">
-            <Link href="/login">Sign in</Link>
+            <Link href="/login">{t('signin')}</Link>
           </Button>
         </CardFooter>
       </Card>
@@ -97,15 +95,13 @@ function ResetPasswordForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Set new password</CardTitle>
-        <CardDescription>
-          Choose a strong password for your FreightFlow account.
-        </CardDescription>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="newPassword">New password</Label>
+            <Label htmlFor="newPassword">{t('newPassword')}</Label>
             <Input
               id="newPassword"
               type="password"
@@ -118,7 +114,7 @@ function ResetPasswordForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm new password</Label>
+            <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
             <Input
               id="confirmPassword"
               type="password"
@@ -133,11 +129,11 @@ function ResetPasswordForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Updating…' : 'Set new password'}
+            {loading ? t('submitting') : t('submit')}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
             <Link href="/login" className="text-primary underline underline-offset-4">
-              ← Back to sign in
+              {t('backToSignin')}
             </Link>
           </p>
         </CardFooter>

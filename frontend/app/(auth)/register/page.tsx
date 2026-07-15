@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -34,6 +35,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
   const router = useRouter();
+  const t = useTranslations('auth.register');
   const { register: registerUser, isLoading } = useAuthStore();
   const [emailSent, setEmailSent] = useState(false);
 
@@ -54,7 +56,7 @@ export default function RegisterPage() {
     try {
       await registerUser(data);
       setEmailSent(true);
-      toast.success('Account created! Please check your email to verify.');
+      toast.success(t('successDescription'));
       setTimeout(() => router.push('/dashboard'), 2000);
     } catch (err: unknown) {
       const error = err as { message?: string | string[] };
@@ -69,14 +71,11 @@ export default function RegisterPage() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Check your email</CardTitle>
-          <CardDescription>
-            We&apos;ve sent a verification link to your email address. Please verify your account to
-            unlock all features.
-          </CardDescription>
+          <CardTitle>{t('successTitle')}</CardTitle>
+          <CardDescription>{t('successDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">Redirecting to dashboard…</p>
+          <p className="text-sm text-muted-foreground">{t('redirecting')}</p>
         </CardContent>
       </Card>
     );
@@ -85,14 +84,14 @@ export default function RegisterPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Create an account</CardTitle>
-        <CardDescription>Join FreightFlow to manage your logistics</CardDescription>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First name</Label>
+              <Label htmlFor="firstName">{t('firstName')}</Label>
               <Input
                 id="firstName"
                 placeholder="John"
@@ -104,7 +103,7 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last name</Label>
+              <Label htmlFor="lastName">{t('lastName')}</Label>
               <Input
                 id="lastName"
                 placeholder="Doe"
@@ -118,7 +117,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input
               id="email"
               type="email"
@@ -132,7 +131,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('password')}</Label>
             <Input
               id="password"
               type="password"
@@ -147,7 +146,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <Label>I am a…</Label>
+            <Label>{t('roleLabel')}</Label>
             <div className="grid grid-cols-2 gap-3">
               {(['shipper', 'carrier'] as const).map((role) => (
                 <button
@@ -161,7 +160,7 @@ export default function RegisterPage() {
                       : 'border-border bg-background text-muted-foreground hover:border-primary/50',
                   )}
                 >
-                  {role}
+                  {t(`roles.${role}`)}
                 </button>
               ))}
             </div>
@@ -172,12 +171,12 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating account…' : 'Create account'}
+            {isLoading ? t('submitting') : t('submit')}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Already have an account?{' '}
+            {t('signinPrompt')}{' '}
             <Link href="/login" className="text-primary underline underline-offset-4">
-              Sign in
+              {t('signin')}
             </Link>
           </p>
         </CardFooter>

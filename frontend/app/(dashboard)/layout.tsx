@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { cn } from '../../lib/utils';
 import { useAuthStore } from '../../stores/auth.store';
@@ -9,31 +10,33 @@ import { useShipmentSocket } from '../../hooks/useShipmentSocket';
 import { NotificationBell } from '../../components/notifications/notification-bell';
 import { ThemeToggle } from '../../components/ui/ThemeToggle';
 import { MobileNav } from '../../components/layout/mobile-nav';
+import { LanguageSwitcher } from '../../components/language-switcher';
 
 const SHIPPER_NAV = [
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/shipments', label: 'My Shipments' },
-  { href: '/shipments/new', label: 'Create Shipment' },
+  { href: '/dashboard', labelKey: 'dashboard' },
+  { href: '/shipments', labelKey: 'myShipments' },
+  { href: '/shipments/new', labelKey: 'createShipment' },
 ];
 
 const CARRIER_NAV = [
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/shipments', label: 'My Jobs' },
-  { href: '/marketplace', label: 'Marketplace' },
+  { href: '/dashboard', labelKey: 'dashboard' },
+  { href: '/shipments', labelKey: 'myJobs' },
+  { href: '/marketplace', labelKey: 'marketplace' },
 ];
 
 const ADMIN_NAV = [
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/shipments', label: 'All Shipments' },
-  { href: '/marketplace', label: 'Marketplace' },
-  { href: '/admin', label: 'Admin Panel' },
-  { href: '/admin/users', label: 'Manage Users' },
-  { href: '/admin/shipments', label: 'Shipment Oversight' },
-  { href: '/admin/disputes', label: 'Disputes' },
+  { href: '/dashboard', labelKey: 'dashboard' },
+  { href: '/shipments', labelKey: 'shipmentOversight' },
+  { href: '/marketplace', labelKey: 'marketplace' },
+  { href: '/admin', labelKey: 'adminPanel' },
+  { href: '/admin/users', labelKey: 'manageUsers' },
+  { href: '/admin/shipments', labelKey: 'shipmentOversight' },
+  { href: '/admin/disputes', labelKey: 'disputes' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const t = useTranslations('dashboard.nav');
   const { user, logout } = useAuthStore();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -41,11 +44,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   useShipmentSocket();
 
   const navItems =
-    user?.role === 'carrier'
+    (user?.role === 'carrier'
       ? CARRIER_NAV
       : user?.role === 'admin'
         ? ADMIN_NAV
-        : SHIPPER_NAV;
+        : SHIPPER_NAV
+    ).map((item) => ({ ...item, label: t(item.labelKey) }));
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -65,10 +69,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <span className="font-bold text-foreground">FreightFlow</span>
         </div>
         <div className="flex items-center gap-2">
+          <LanguageSwitcher className="mr-1" buttonClassName="h-8 px-2 text-sm text-muted-foreground hover:text-foreground" />
           <NotificationBell />
           <button
             onClick={() => setMobileNavOpen(true)}
-            aria-label="Open navigation menu"
+            aria-label={t('openMenu')}
             aria-expanded={mobileNavOpen}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
@@ -89,6 +94,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
           <span className="font-bold text-foreground flex-1">FreightFlow</span>
           <ThemeToggle />
+          <LanguageSwitcher className="ml-1" buttonClassName="h-8 px-2 text-sm text-muted-foreground hover:text-foreground" />
           <NotificationBell />
         </div>
 
@@ -110,7 +116,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     : 'text-muted-foreground hover:bg-accent hover:text-foreground',
                 )}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             );
           })}
@@ -142,7 +148,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   : 'text-muted-foreground hover:text-foreground',
               )}
             >
-              Profile
+              {t('profile')}
             </Link>
             <Link
               href="/settings"
@@ -153,13 +159,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   : 'text-muted-foreground hover:text-foreground',
               )}
             >
-              Settings
+              {t('settings')}
             </Link>
             <button
               onClick={logout}
               className="w-full text-left text-xs text-muted-foreground hover:text-foreground transition-colors px-1 py-1"
             >
-              Sign out
+              {t('signOut')}
             </button>
           </div>
         </div>

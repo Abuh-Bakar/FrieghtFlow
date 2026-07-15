@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -19,6 +20,7 @@ import {
   CardTitle,
 } from '../../../components/ui/card';
 import { useAuthStore } from '../../../stores/auth.store';
+import { LanguageSwitcher } from '../../../components/language-switcher';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -32,6 +34,7 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
   const { login, isLoading } = useAuthStore();
+  const t = useTranslations('auth.login');
 
   const {
     register,
@@ -56,15 +59,19 @@ function LoginForm() {
   };
 
   return (
-    <Card>
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <LanguageSwitcher />
+      </div>
+      <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Sign in</CardTitle>
-        <CardDescription>Enter your email and password to access your account</CardDescription>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input
               id="email"
               type="email"
@@ -78,12 +85,12 @@ function LoginForm() {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Link
                 href="/forgot-password"
                 className="text-xs text-primary underline underline-offset-4"
               >
-                Forgot password?
+                {t('forgotPassword')}
               </Link>
             </div>
             <Input
@@ -100,17 +107,18 @@ function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Signing in…' : 'Sign in'}
+            {isLoading ? t('submitting') : t('submit')}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Don&apos;t have an account?{' '}
+            {t('signupPrompt')}{' '}
             <Link href="/register" className="text-primary underline underline-offset-4">
-              Sign up
+              {t('signup')}
             </Link>
           </p>
         </CardFooter>
       </form>
-    </Card>
+      </Card>
+    </div>
   );
 }
 

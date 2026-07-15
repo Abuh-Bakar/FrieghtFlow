@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
+const intlMiddleware = createMiddleware(routing);
 const protectedRoutes = ["/dashboard", "/profile", "/settings"];
 const guestRoutes = ["/login", "/register"];
+
+function stripLocale(pathname: string) {
+  const localePattern = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
+  return pathname.replace(localePattern, "") || "/";
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip static assets and Next internals
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -15,19 +22,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const intlResponse = intlMiddleware(request);
+  const normalizedPathname = stripLocale(pathname);
   const authToken = request.cookies.get("auth_token")?.value;
   const isAuthenticated = !!authToken;
 
   const isProtected = protectedRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
+    (route) => normalizedPathname === route || normalizedPathname.startsWith(`${route}/`),
   );
   const isGuestOnly = guestRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
+    (route) => normalizedPathname === route || normalizedPathname.startsWith(`${route}/`),
   );
 
   if (isProtected && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
+    loginUrl.searchParams.set("callbackUrl", normalizedPathname);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -35,9 +44,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  return NextResponse.next();
+  return intlResponse;
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };

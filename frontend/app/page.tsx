@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { LanguageSwitcher } from "../components/language-switcher";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -106,7 +108,9 @@ const FOOTER_LINKS = {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getTranslations("home");
+
   return (
     <>
       <style>{`
@@ -184,17 +188,18 @@ export default function HomePage() {
 
             {/* CTAs */}
             <div className="flex items-center gap-3">
+              <LanguageSwitcher />
               <Link
                 href="/login"
                 className="text-sm text-white/70 hover:text-white transition-colors px-3 py-1.5"
               >
-                Sign in
+                {t("nav.signin")}
               </Link>
               <Link
                 href="/register"
                 className="text-sm bg-white text-[#0a0a0a] font-semibold px-4 py-2 rounded-lg hover:bg-white/90 transition-colors"
               >
-                Get started free
+                {t("nav.getStarted")}
               </Link>
             </div>
           </nav>
@@ -280,16 +285,12 @@ export default function HomePage() {
 
             {/* Headline */}
             <h1 className="fade-up-2 text-5xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
-              Move cargo.
-              <br />
-              <span className="gradient-text">Not paperwork.</span>
+              {t("hero.headline")}
             </h1>
 
             {/* Subheadline */}
             <p className="fade-up-3 text-lg sm:text-xl text-white/55 max-w-xl mx-auto leading-relaxed mb-10">
-              FreightFlow connects shippers and carriers on a transparent,
-              blockchain-secured platform. Post a load, find a carrier, track
-              every step — and pay only on delivery.
+              {t("hero.subheadline")}
             </p>
 
             {/* CTA buttons */}
@@ -298,7 +299,7 @@ export default function HomePage() {
                 href="/register?role=shipper"
                 className="group w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#0a0a0a] font-bold px-7 py-3.5 rounded-xl hover:bg-white/90 transition-all text-sm"
               >
-                Post a shipment
+                {t("hero.primaryCta")}
                 <span className="group-hover:translate-x-0.5 transition-transform">
                   →
                 </span>
@@ -307,7 +308,7 @@ export default function HomePage() {
                 href="/register?role=carrier"
                 className="group w-full sm:w-auto flex items-center justify-center gap-2 border border-white/20 text-white font-medium px-7 py-3.5 rounded-xl hover:bg-white/8 transition-all text-sm backdrop-blur-sm"
               >
-                Find loads to carry
+                {t("hero.secondaryCta")}
                 <span className="group-hover:translate-x-0.5 transition-transform">
                   →
                 </span>
